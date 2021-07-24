@@ -15,7 +15,7 @@ namespace Handlers
             _context = context;
         }
 
-        public IEnumerable<Users> GetAllUsers()
+        public IEnumerable<Users> GetAll()
         {
             return _context.Users;
         }

@@ -23,13 +23,13 @@ namespace budget_api.Controllers
         [HttpGet]
         public IEnumerable<Users> GetAllUsers()
         {
-            return _userManager.GetAllUsers();
+            return _userManager.GetAll();
         }
 
-        [HttpGet("{userId}")]
-        public Users GetUserById(int userId)
+        [HttpGet("{id}")]
+        public Users Get(int id)
         {
-            return _userManager.GetUserById(userId);
+            return _userManager.GetUserById(id);
         }
     }
 }

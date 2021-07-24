@@ -82,9 +82,11 @@ namespace budget_api
         {
             // Managers 
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<ITransactionManager, TransactionManager>();
 
             // Handlers
             services.AddScoped<IUserHandler, UserHandler>();
+            services.AddScoped<ITransactionHandler, TransactionHandler>();
         }
     }
 }

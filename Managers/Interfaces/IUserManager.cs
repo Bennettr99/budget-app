@@ -8,6 +8,6 @@ namespace Managers.Interfaces
     public interface IUserManager
     {
         Users GetUserById(int userId);
-        IEnumerable<Users> GetAllUsers();
+        IEnumerable<Users> GetAll();
     }
 }

@@ -15,9 +15,9 @@ namespace Managers
             _userHandler = userHandler;
         }
 
-        public IEnumerable<Users> GetAllUsers()
+        public IEnumerable<Users> GetAll()
         {
-            return _userHandler.GetAllUsers();
+            return _userHandler.GetAll();
         }
 
         public Users GetUserById(int userId)

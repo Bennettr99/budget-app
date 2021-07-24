@@ -8,6 +8,6 @@ namespace Handlers.Interfaces
     public interface IUserHandler
     {
         Users GetUserById(int userId);
-        IEnumerable<Users> GetAllUsers();
+        IEnumerable<Users> GetAll();
     }
 }

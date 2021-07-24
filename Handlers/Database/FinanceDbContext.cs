@@ -10,6 +10,8 @@ namespace budget_api
     public class FinanceDbContext : DbContext
     {
         public DbSet<Users> Users { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
+
         public FinanceDbContext(DbContextOptions<FinanceDbContext> options) : base(options)
         {
 
@@ -18,6 +20,7 @@ namespace budget_api
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Users>();
+            modelBuilder.Entity<Transactions>();
         }
     }
 }
