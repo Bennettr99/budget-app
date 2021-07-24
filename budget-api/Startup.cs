@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Managers;
+using Managers.Interfaces;
+using Handlers.Interfaces;
+using Handlers;
 
 namespace budget_api
 {
@@ -22,6 +27,11 @@ namespace budget_api
         {
 
             services.AddControllersWithViews();
+            ConfigureInjections(services);
+
+            services.AddDbContext<FinanceDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DatabaseConnectionString")));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -66,6 +76,15 @@ namespace budget_api
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+
+        private void ConfigureInjections(IServiceCollection services)
+        {
+            // Managers 
+            services.AddScoped<IUserManager, UserManager>();
+
+            // Handlers
+            services.AddScoped<IUserHandler, UserHandler>();
         }
     }
 }
