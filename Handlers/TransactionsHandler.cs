@@ -8,21 +8,21 @@ using System.Text;
 
 namespace Handlers
 {
-    public class TransactionHandler : ITransactionHandler
+    public class TransactionsHandler : ITransactionsHandler
     {
         private readonly FinanceDbContext _dbContext;
 
-        public TransactionHandler(FinanceDbContext dbContext)
+        public TransactionsHandler(FinanceDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Transactions> GetAll()
+        public IEnumerable<Transaction> GetAll(int userId)
         {
-            return _dbContext.Transactions;
+            return _dbContext.Transactions.Where(t => t.UserId == userId);
         }
 
-        public Transactions GetTransactionById(int userId, int transactionId)
+        public Transaction GetTransactionById(int userId, int transactionId)
         {
             return _dbContext.Transactions.FirstOrDefault(t => t.TransactionId == transactionId && t.UserId == userId);
         }

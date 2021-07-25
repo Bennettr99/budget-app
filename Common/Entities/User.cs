@@ -7,7 +7,7 @@ using System.Text;
 namespace Common.Entities
 {
     [Table("Users", Schema = "dimension")]
-    public class Users
+    public class User
     {
         [Key]
         public int UserId { get; set; }

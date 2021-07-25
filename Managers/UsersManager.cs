@@ -6,21 +6,21 @@ using System.Collections.Generic;
 
 namespace Managers
 {
-    public class UserManager : IUserManager
+    public class UsersManager : IUsersManager
     {
-        private readonly IUserHandler _userHandler;
+        private readonly IUsersHandler _userHandler;
 
-        public UserManager(IUserHandler userHandler)
+        public UsersManager(IUsersHandler userHandler)
         {
             _userHandler = userHandler;
         }
 
-        public IEnumerable<Users> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return _userHandler.GetAll();
         }
 
-        public Users GetUserById(int userId)
+        public User GetUserById(int userId)
         {
             return _userHandler.GetUserById(userId);
         }

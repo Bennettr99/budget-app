@@ -7,20 +7,20 @@ using System.Linq;
 
 namespace Handlers
 {
-    public class UserHandler: IUserHandler
+    public class UsersHandler: IUsersHandler
     {
         private readonly FinanceDbContext _context;
-        public UserHandler(FinanceDbContext context)
+        public UsersHandler(FinanceDbContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<Users> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return _context.Users;
         }
 
-        public Users GetUserById(int userId)
+        public User GetUserById(int userId)
         {
             return _context.Users.FirstOrDefault(user => user.UserId == userId);
         }

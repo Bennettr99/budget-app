@@ -15,6 +15,8 @@ namespace budget_api
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,13 +27,14 @@ namespace budget_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllersWithViews();
-            ConfigureInjections(services);
+            ConfigureCors(services);
 
             services.AddDbContext<FinanceDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DatabaseConnectionString")));
+
+            services.AddControllersWithViews();
+            ConfigureInjections(services);
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -53,6 +56,8 @@ namespace budget_api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -81,12 +86,26 @@ namespace budget_api
         private void ConfigureInjections(IServiceCollection services)
         {
             // Managers 
-            services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<ITransactionManager, TransactionManager>();
+            services.AddScoped<IUsersManager, UsersManager>();
+            services.AddScoped<ITransactionsManager, TransactionsManager>();
 
             // Handlers
-            services.AddScoped<IUserHandler, UserHandler>();
-            services.AddScoped<ITransactionHandler, TransactionHandler>();
+            services.AddScoped<IUsersHandler, UsersHandler>();
+            services.AddScoped<ITransactionsHandler, TransactionsHandler>();
         }
+
+        public void ConfigureCors(IServiceCollection services)
+        {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: MyAllowSpecificOrigins, builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+        }
+
     }
 }

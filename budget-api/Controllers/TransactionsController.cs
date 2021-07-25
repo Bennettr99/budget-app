@@ -10,23 +10,23 @@ namespace budget_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionController : ControllerBase
+    public class TransactionsController : ControllerBase
     {
-        private readonly ITransactionManager _transactionManager;
+        private readonly ITransactionsManager _transactionManager;
 
-        public TransactionController(ITransactionManager transactionManager)
+        public TransactionsController(ITransactionsManager transactionManager)
         {
             _transactionManager = transactionManager;
         }
 
-        [HttpGet]
-        public IEnumerable<Transactions> GetAll()
+        [HttpGet("{id}")]
+        public IEnumerable<Transaction> GetAll(int id)
         {
-            return _transactionManager.GetAll();
+            return _transactionManager.GetAll(id);
         }
 
         [HttpGet("{id}/{userId}")]
-        public Transactions Get(int id, int userId)
+        public Transaction Get(int id, int userId)
         {
             return _transactionManager.GetTransactionById(userId, id);
         }

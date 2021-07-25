@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Handlers.Interfaces
 {
-    public interface IUserHandler
+    public interface IUsersHandler
     {
-        Users GetUserById(int userId);
-        IEnumerable<Users> GetAll();
+        User GetUserById(int userId);
+        IEnumerable<User> GetAll();
     }
 }

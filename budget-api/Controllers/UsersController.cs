@@ -11,23 +11,23 @@ namespace budget_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
-        private readonly IUserManager _userManager;
+        private readonly IUsersManager _userManager;
 
-        public UserController(IUserManager userManager)
+        public UsersController(IUsersManager userManager)
         {
             _userManager = userManager;
         }
 
         [HttpGet]
-        public IEnumerable<Users> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             return _userManager.GetAll();
         }
 
         [HttpGet("{id}")]
-        public Users Get(int id)
+        public User Get(int id)
         {
             return _userManager.GetUserById(id);
         }

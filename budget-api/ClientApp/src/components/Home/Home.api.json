@@ -1,0 +1,114 @@
+[
+    {
+        "transactionId": 1,
+        "userId": 1,
+        "description": "ONLINE TRANSFER TO ACCT ENDING 4020",
+        "amount": -300,
+        "accountType": 1,
+        "transactionDate": "2020-01-02T00:00:00"
+    },
+    {
+        "transactionId": 2,
+        "userId": 1,
+        "description": "0166 Microsoft*Xbox Live msbill.info  WA",
+        "amount": -60,
+        "accountType": 1,
+        "transactionDate": "2020-01-02T00:00:00"
+    },
+    {
+        "transactionId": 3,
+        "userId": 1,
+        "description": "0166 HY-VEE GAS OMAHA 749OMAHA        NE",
+        "amount": -22,
+        "accountType": 1,
+        "transactionDate": "2020-01-03T00:00:00"
+    },
+    {
+        "transactionId": 4,
+        "userId": 1,
+        "description": "ONLINE TRANSFER FROM ACCT ENDING 7380",
+        "amount": 300,
+        "accountType": 1,
+        "transactionDate": "2020-01-06T00:00:00"
+    },
+    {
+        "transactionId": 5,
+        "userId": 1,
+        "description": "0166 Microsoft*Xbox      Redmond      WA",
+        "amount": -11,
+        "accountType": 1,
+        "transactionDate": "2020-01-06T00:00:00"
+    },
+    {
+        "transactionId": 6,
+        "userId": 1,
+        "description": "0166 POPEYES 4906        OMAHA        NE",
+        "amount": -15,
+        "accountType": 1,
+        "transactionDate": "2020-01-06T00:00:00"
+    },
+    {
+        "transactionId": 7,
+        "userId": 1,
+        "description": "0166 Wal-Mart Super CenteOMAHA        NE",
+        "amount": -50,
+        "accountType": 1,
+        "transactionDate": "2020-01-06T00:00:00"
+    },
+    {
+        "transactionId": 8,
+        "userId": 1,
+        "description": "TARGET                -0530OMAHA        NE     TARGET DEBIT",
+        "amount": -45,
+        "accountType": 1,
+        "transactionDate": "2020-01-13T00:00:00"
+    },
+    {
+        "transactionId": 9,
+        "userId": 1,
+        "description": "0166 QT 591              OMAHA        NE",
+        "amount": -13,
+        "accountType": 1,
+        "transactionDate": "2020-01-13T00:00:00"
+    },
+    {
+        "transactionId": 10,
+        "userId": 1,
+        "description": "0166 Wal-Mart Super CenteAMES         IA",
+        "amount": -32,
+        "accountType": 1,
+        "transactionDate": "2020-01-13T00:00:00"
+    },
+    {
+        "transactionId": 11,
+        "userId": 1,
+        "description": "TARGET                -1170AMES         IA     TARGET DEBIT",
+        "amount": -18,
+        "accountType": 1,
+        "transactionDate": "2020-01-14T00:00:00"
+    },
+    {
+        "transactionId": 12,
+        "userId": 1,
+        "description": "0166 KUM & GO #1215      AMES         IA",
+        "amount": -17,
+        "accountType": 1,
+        "transactionDate": "2020-01-14T00:00:00"
+    },
+    {
+        "transactionId": 13,
+        "userId": 1,
+        "description": "0166 HY-VEE AMES 1013 380AMES         IA",
+        "amount": -6,
+        "accountType": 1,
+        "transactionDate": "2020-01-14T00:00:00"
+    },
+    {
+        "transactionId": 14,
+        "userId": 1,
+        "description": "0166 ISU BOOKSTORE       AMES         IA",
+        "amount": -25,
+        "accountType": 1,
+        "transactionDate": "2020-01-14T00:00:00"
+    }
+]
