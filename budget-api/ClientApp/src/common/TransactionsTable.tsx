@@ -1,48 +1,95 @@
-import MaterialTable, { Icons } from 'material-table';
-import React, { forwardRef } from 'react';
-import ClearIcon from '@material-ui/icons/Clear';
-import SearchIcon from "@material-ui/icons/Search";
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import { AccountType, Transaction } from '../components/Home/Home.api';
+import { Table } from 'antd';
+import { FilterValue, SortOrder, TablePaginationConfig } from 'antd/lib/table/interface';
 import moment from 'moment';
-import { ArrowDownward } from '@material-ui/icons';
+import React from 'react';
+import { AccountType, Transaction } from '../components/Home/Home.api';
 
 interface TransactionsTableProps {
     transactions: Transaction[]
 }
 
-export class TransactionsTable extends React.Component<TransactionsTableProps, {}> {
-    render() {
-        const icons: Icons = {
-            Clear: forwardRef((props: any, ref: any) => <ClearIcon {...props} ref={ref} />),
-            DetailPanel: forwardRef((props, ref) => <NavigateNextIcon {...props} ref={ref} />),
-            FirstPage: forwardRef((props: any, ref: any) => <FirstPageIcon {...props} ref={ref} />),
-            LastPage: forwardRef((props: any, ref: any) => <LastPageIcon {...props} ref={ref} />),
-            NextPage: forwardRef((props: any, ref: any) => <NavigateNextIcon {...props} ref={ref} />),
-            PreviousPage: forwardRef((props: any, ref: any) => <NavigateBeforeIcon {...props} ref={ref} />),
-            ResetSearch: forwardRef((props: any, ref: any) => <ClearIcon {...props} ref={ref} />),  
-            Search: forwardRef((props: any, ref: any) => <SearchIcon {...props} ref={ref} />),
-            SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-        }
+interface TransactionsTableState {
+    pagination: TablePaginationConfig;
+}
 
+export class TransactionsTable extends React.Component<TransactionsTableProps, TransactionsTableState> {
+    state: Readonly<TransactionsTableState> = {
+        pagination: {
+            pageSize: 50
+        },
+    };
+
+    private handleTableChange = (pagination: TablePaginationConfig) => {
+        this.setState({ pagination });
+    }
+
+    private getDateFilters = (transactions: Transaction[]) => {
+        const monthYear = transactions.map(t => {
+            return t.transactionDate.format("MM.YY");
+        });
+        return Array.from(new Set(monthYear)).map(t => {
+            return {
+                text: t,
+                value: t,
+            }
+        });
+    }
+
+    render() {
         const { transactions } = this.props;
+        const { pagination } = this.state;
+        console.log(this.getDateFilters(transactions));
+        const columns = [
+            {
+                title: "Date",
+                dataIndex: "date",
+                key: "date",
+                filters: this.getDateFilters(transactions),
+                onFilter: (value: any, record: any) => moment(record.date).format("MM.YY") === value,
+                sorter: (a: any, b: any) => moment(a.date).isBefore(moment(b.date)) ? -1 : 1,
+                sortDirections: ["descend"] as SortOrder[],
+            },
+            {
+                title: "Description",
+                dataIndex: "description",
+                key: "description",
+            },
+            {
+                title: "Account Type",
+                dataIndex: "accountType",
+                key: "accountType",
+                filters: [
+                    {
+                        text: AccountType[1].toString(),
+                        value: AccountType[1].toString(),
+                    },
+                    {
+                        text: AccountType[2].toString(),
+                        value: AccountType[2].toString(),
+                    }
+                ],
+                onFilter: (value: any, record: any) => record.accountType === value,
+            },
+            {
+                title: "Amount",
+                dataIndex: "amount",
+                key: "amount",
+                sorter: (a: any, b: any) => a.amount - b.amount,
+                sortDirections: ["ascend", "descend"] as SortOrder[],
+            },
+        ]
+        const dataSource = transactions.map((t, index) => {
+            return {
+                key: index,
+                date: moment(t.transactionDate).format("MM.DD.YYYY"),
+                amount: t.amount,
+                description: t.description,
+                accountType: AccountType[t.acountType],
+            };
+        });
+
         return (
-            <MaterialTable
-                columns={[
-                    { title: "Date", field: "date" },
-                    { title: "Amount", field: "amount" },
-                    { title: "Description", field: "description" },
-                    { title: "Account Type", field: "account" },
-                ]}
-                data={transactions.map((t: Transaction) => {
-                    return { date: moment(t.transactionDate).format("MM.DD.YYYY"), amount: t.amount, account: AccountType[t.acountType], description: t.description }
-                })}
-                title="Title"
-                icons={icons}
-                options={{grouping: true}} />
+            <Table dataSource={dataSource} columns={columns} pagination={pagination} onChange={this.handleTableChange} />
         )
     }
 }
