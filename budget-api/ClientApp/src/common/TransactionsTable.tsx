@@ -1,51 +1,65 @@
-import { Table } from 'antd';
-import { FilterValue, SortOrder, TablePaginationConfig } from 'antd/lib/table/interface';
+import { DatePicker, Row, Spin, Table } from 'antd';
+import { SortOrder, TablePaginationConfig } from 'antd/lib/table/interface';
 import moment from 'moment';
 import React from 'react';
+import { BRCol } from '../components/BRWrappers/BRCol/BRCol';
 import { AccountType, Transaction } from '../components/Home/Home.api';
+import { HomeHandler } from '../components/Home/Home.handler';
+import "./TransactionsTable.css";
 
-interface TransactionsTableProps {
-    transactions: Transaction[]
-}
+// interface TransactionsTableProps {
+//     transactions: Transaction[]
+// }
 
 interface TransactionsTableState {
     pagination: TablePaginationConfig;
+    transactions: Transaction[];
+    filteredTransactions: Transaction[];
 }
 
-export class TransactionsTable extends React.Component<TransactionsTableProps, TransactionsTableState> {
+export class TransactionsTable extends React.Component<{}, TransactionsTableState> {
+    private handler: HomeHandler = new HomeHandler();
+    
     state: Readonly<TransactionsTableState> = {
         pagination: {
             pageSize: 50
         },
+        transactions: [],
+        filteredTransactions: [],
     };
+
+    async componentDidMount() {
+        this.setState({ transactions: await this.loadTransactions() });
+    }
+
+    componentDidUpdate(pervProps: any, prevState: TransactionsTableState) {
+        if (prevState.transactions.length !== this.state.transactions.length) {
+            this.setState({ filteredTransactions: this.state.transactions });
+        }
+    }
+
+    private loadTransactions = () => {
+        return this.handler.getTransactions(1);
+    }
 
     private handleTableChange = (pagination: TablePaginationConfig) => {
         this.setState({ pagination });
     }
 
-    private getDateFilters = (transactions: Transaction[]) => {
-        const monthYear = transactions.map(t => {
-            return t.transactionDate.format("MM.YY");
-        });
-        return Array.from(new Set(monthYear)).map(t => {
-            return {
-                text: t,
-                value: t,
-            }
+    private onDateChange = (date: any) => {
+        const { transactions } = this.state;
+        this.setState({
+            filteredTransactions: date ? transactions.filter(t => t.transactionDate.format("MM.YYYY") === moment(date).format("MM.YYYY")) : transactions,
         });
     }
 
     render() {
-        const { transactions } = this.props;
-        const { pagination } = this.state;
-        console.log(this.getDateFilters(transactions));
+        const { pagination, transactions, filteredTransactions } = this.state;
         const columns = [
             {
                 title: "Date",
                 dataIndex: "date",
                 key: "date",
-                filters: this.getDateFilters(transactions),
-                onFilter: (value: any, record: any) => moment(record.date).format("MM.YY") === value,
                 sorter: (a: any, b: any) => moment(a.date).isBefore(moment(b.date)) ? -1 : 1,
                 sortDirections: ["descend"] as SortOrder[],
             },
@@ -78,7 +92,7 @@ export class TransactionsTable extends React.Component<TransactionsTableProps, T
                 sortDirections: ["ascend", "descend"] as SortOrder[],
             },
         ]
-        const dataSource = transactions.map((t, index) => {
+        const dataSource = filteredTransactions.map((t, index) => {
             return {
                 key: index,
                 date: moment(t.transactionDate).format("MM.DD.YYYY"),
@@ -89,7 +103,18 @@ export class TransactionsTable extends React.Component<TransactionsTableProps, T
         });
 
         return (
-            <Table dataSource={dataSource} columns={columns} pagination={pagination} onChange={this.handleTableChange} />
+            <>
+                <Spin tip="Loading..." spinning={transactions.length === 0}>
+                    <div className="table-container">
+                        <Row justify="end">
+                            <BRCol>
+                                <DatePicker format={"MM.YYYY"} picker="month" onChange={this.onDateChange} />
+                            </BRCol>
+                        </Row>
+                        <Table className="transactions-table" dataSource={dataSource} columns={columns} pagination={pagination} onChange={this.handleTableChange} />
+                    </div>
+                </Spin>
+            </>
         )
     }
 }

@@ -1,0 +1,11 @@
+.table-container {
+    margin: 0rem 1rem;
+}
+
+.transactions-table {
+    border-style: solid;
+    border-color: #f0f0f0;
+    border-width: 1px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
