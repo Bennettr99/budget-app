@@ -19,7 +19,7 @@ interface TransactionsTableState {
 
 export class TransactionsTable extends React.Component<{}, TransactionsTableState> {
     private handler: HomeHandler = new HomeHandler();
-    
+
     state: Readonly<TransactionsTableState> = {
         pagination: {
             pageSize: 50
@@ -106,7 +106,10 @@ export class TransactionsTable extends React.Component<{}, TransactionsTableStat
             <>
                 <Spin tip="Loading..." spinning={transactions.length === 0}>
                     <div className="table-container">
-                        <Row justify="end">
+                        <Row justify="space-between" style={{backgroundColor: "#f0f0f0"}}>
+                            <BRCol>
+                                Filters
+                            </BRCol>
                             <BRCol>
                                 <DatePicker format={"MM.YYYY"} picker="month" onChange={this.onDateChange} />
                             </BRCol>

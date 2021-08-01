@@ -2,6 +2,10 @@
     margin: 0rem 1rem;
 }
 
+.filter-row {
+    border-color: grey;
+}
+
 .transactions-table {
     border-style: solid;
     border-color: #f0f0f0;
