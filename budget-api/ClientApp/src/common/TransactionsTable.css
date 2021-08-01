@@ -3,7 +3,10 @@
 }
 
 .filter-row {
+    background-color: #f0f0f0;
     border-color: grey;
+    font-size: 1.4rem; 
+    font-weight: bold;
 }
 
 .transactions-table {

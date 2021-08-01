@@ -21,7 +21,7 @@ interface BRColProps {
     xxl?: ColSpanType | ColSize;
     prefixCls?: string;
     children?: ReactNode;
-    style?: {};
+    style?: React.CSSProperties;
 }
 
 export class BRCol extends React.Component<BRColProps, {}> {

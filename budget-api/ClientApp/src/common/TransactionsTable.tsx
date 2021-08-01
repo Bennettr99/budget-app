@@ -7,10 +7,6 @@ import { AccountType, Transaction } from '../components/Home/Home.api';
 import { HomeHandler } from '../components/Home/Home.handler';
 import "./TransactionsTable.css";
 
-// interface TransactionsTableProps {
-//     transactions: Transaction[]
-// }
-
 interface TransactionsTableState {
     pagination: TablePaginationConfig;
     transactions: Transaction[];
@@ -106,7 +102,7 @@ export class TransactionsTable extends React.Component<{}, TransactionsTableStat
             <>
                 <Spin tip="Loading..." spinning={transactions.length === 0}>
                     <div className="table-container">
-                        <Row justify="space-between" style={{backgroundColor: "#f0f0f0"}}>
+                        <Row className="filter-row" justify="space-between">
                             <BRCol>
                                 Filters
                             </BRCol>
