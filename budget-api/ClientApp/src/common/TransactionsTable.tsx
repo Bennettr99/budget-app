@@ -7,6 +7,8 @@ import { AccountType, Transaction } from '../components/Home/Home.api';
 import { HomeHandler } from '../components/Home/Home.handler';
 import "./TransactionsTable.css";
 
+const { RangePicker } = DatePicker;
+
 interface TransactionsTableState {
     pagination: TablePaginationConfig;
     transactions: Transaction[];
@@ -42,11 +44,18 @@ export class TransactionsTable extends React.Component<{}, TransactionsTableStat
         this.setState({ pagination });
     }
 
-    private onDateChange = (date: any) => {
+    private onDateChange = (values: any, formatString: [string, string]) => {
         const { transactions } = this.state;
-        this.setState({
-            filteredTransactions: date ? transactions.filter(t => t.transactionDate.format("MM.YYYY") === moment(date).format("MM.YYYY")) : transactions,
-        });
+        const startDate = values[0];
+        const endDate = values[1];
+        if (!startDate || !endDate) {
+            this.setState({ transactions });
+        }
+        else {
+            this.setState({
+                filteredTransactions: transactions.filter(t => t.transactionDate > startDate && t.transactionDate < endDate),
+            });
+        }
     }
 
     render() {
@@ -107,7 +116,7 @@ export class TransactionsTable extends React.Component<{}, TransactionsTableStat
                                 Filters
                             </BRCol>
                             <BRCol>
-                                <DatePicker format={"MM.YYYY"} picker="month" onChange={this.onDateChange} />
+                                <RangePicker onChange={this.onDateChange} />
                             </BRCol>
                         </Row>
                         <Table className="transactions-table" dataSource={dataSource} columns={columns} pagination={pagination} onChange={this.handleTableChange} />
