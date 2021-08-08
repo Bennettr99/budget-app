@@ -1,5 +1,5 @@
-const OKTA_DOMAIN = process.env.DOMAIN;
-const CLIENT_ID = process.env.CLIENT_ID;
+const OKTA_DOMAIN = 'dev-93258595.okta.com';
+const CLIENT_ID = '0oa1e1y6tk2xLTyRP5d7';
 const CALLBACK_PATH = '/login/callback';
 
 const ISSUER = `https://${OKTA_DOMAIN}/oauth2/default`;
