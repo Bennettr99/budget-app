@@ -1,6 +1,6 @@
 import { DatePicker, Row, Spin, Table } from 'antd';
 import { SortOrder, TablePaginationConfig } from 'antd/lib/table/interface';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import React from 'react';
 import { BRCol } from '../components/BRWrappers/BRCol/BRCol';
 import { AccountType, Transaction } from '../components/Home/Home.api';
@@ -13,6 +13,9 @@ interface TransactionsTableState {
     pagination: TablePaginationConfig;
     transactions: Transaction[];
     filteredTransactions: Transaction[];
+    startDate: Moment;
+    endDate: Moment;
+    accountType: AccountType[];
 }
 
 export class TransactionsTable extends React.Component<{}, TransactionsTableState> {
@@ -24,6 +27,9 @@ export class TransactionsTable extends React.Component<{}, TransactionsTableStat
         },
         transactions: [],
         filteredTransactions: [],
+        startDate: moment('01-01-1970'),
+        endDate: moment(),
+        accountType: 
     };
 
     async componentDidMount() {
@@ -42,6 +48,10 @@ export class TransactionsTable extends React.Component<{}, TransactionsTableStat
 
     private handleTableChange = (pagination: TablePaginationConfig) => {
         this.setState({ pagination });
+    }
+
+    private filterTransactions() {
+        const {}
     }
 
     private onDateChange = (values: any, formatString: [string, string]) => {
